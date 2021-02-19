@@ -1,0 +1,35 @@
+{% extends 'principal/index.html' %}
+{% load static %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/contacto.css' %}">
+{% endblock %}
+
+{% block title %} Contacto {% endblock %}
+
+{% block content %}
+
+    <h1 class="text-center mt-3">Contacto</h1>
+    <div class="contenedor-contacto">
+        <div class="d-flex justify-content-center align-item-center">
+            <img src="{% static 'img/contacto.jpg' %}" alt="Contactanos" width="30%">
+        </div>
+        <div class="d-flex justify-content-center align-item-center my-3">
+                <table>
+                    <tr>
+                        <th>Dirección: </th>
+                        <th>Cordoba 5050</th>
+                    </tr>
+                    <tr>
+                        <th>Telefono: </th>
+                        <th>3624123456</th>
+                    </tr>
+                    <tr>
+                        <th>Email: </th>
+                        <th>info@unrespiroalmundo.com.ar</th>
+                    </tr>
+                </table>
+        </div>
+    </div>
+    
+{% endblock %}

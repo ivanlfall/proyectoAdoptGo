@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contacto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nosotros.css' %}">
+
+
+    <title>{% block title %} AdoptGo {% endblock %}</title>
+</head>
+<body class="inicio">
+    {% include 'principal/menuBar.html' %}
+
+    {% block content %} 
+        <h1 class="text-center">Adopt em <strong>All</strong></h1>
+        <div class="d-flex justify-content-center align-item-center">
+            
+            <!-- <img src="https://us.123rf.com/450wm/tigatelu/tigatelu1511/tigatelu151100319/49007876-ilustraci%C3%B3n-vectorial-de-dibujos-animados-loro-blanco-divertido-presentando-aisladas-sobre-fondo-blanco.jpg?ver=6" alt="Bosque" width="30%" class="img img-fluid mt-3"> -->
+            <img src="https://lh3.googleusercontent.com/proxy/fa9BraMNxBclYQetEQ-Nh5fneYoRFUHThWDb4lyIPmqwB3SVmZBHAVZKkO_6FGIJnn30XTOEFA8fvPOInqCByYgX4LjZZJBgQ7x7aBbjNEaH4VWnV6RqnUrQKTnnqWiovNbAAVXekaYfbIQ8nPpX1NHXnUhyPQ" alt="Mascotas" width="30%" class="img img-fluid mt-3">
+        </div>
+    {% endblock %}
+
+    {% include 'principal/footer.html' %}
+</body>
+</html>
