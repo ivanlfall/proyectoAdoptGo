@@ -1,0 +1,22 @@
+{% extends 'principal/index.html' %}
+
+{% block title %} Denuncia {% endblock %}
+
+{% block content %}
+
+    {% if denuncia_ok %}
+        <h1 class="text-center mt-5">{{mensaje}}</h1>
+    {% else %}
+
+        <div class="container">
+            <h1 class="text-center my-4">Generar denuncia para {{userDenunciado.first_name}} {{userDenunciado.last_name}}</h1>
+            <form action="" method="POST"> {% csrf_token %}
+                <input type="text" value="{{userDenunciado.id}}" hidden name="idDenunciado"  >
+                <input type="text" value="{{userDenunciante.id}}" hidden name="idDenunciante" >
+                <textarea name="comentario" cols="30" rows="10" placeholder="Agrega un comentario" class="form-control"></textarea>
+                <input type="submit" name="denunciar" value="Denunciar" class="btn btn-danger mt-4">
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}

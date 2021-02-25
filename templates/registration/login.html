@@ -1,0 +1,33 @@
+{% extends 'principal/index.html' %}
+
+{% block title %} Iniciar sesión {% endblock %}
+
+{   % include 'principal/menuBar.html' %}
+
+{% block content %}
+
+<div class="container py-4 d-flex justify-content-center">
+    <div class="row py-4">
+        <div class="col">
+            <h2 class="text-center">Iniciar Sesión</h2>
+            <hr>
+            {% load crispy_forms_tags %}
+            <div class="container text-center">
+                <form method="POST">
+                    {% csrf_token%}
+                    {{form | crispy}}
+                    <div class="text-center py-4">
+
+                        <a href="#">
+                            <p>¿Olvidaste tu constraseña?</p>
+                        </a>
+                        <p>Si aún no eres usuario haz click <a href="{% url 'registroUsuario' %}">aquí</a></p>
+                    </div>
+                    <button class="btn btn-outline-success bt-2" type="submit"><b>Iniciar</b></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -13,16 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from apps.registro.views import mostrar_posteo, nuevoPost
+from apps.registro.views import denunciar, formulario_registro_usuario, mi_perfil, mis_posteos, mostrar_posteo, nuevoPost, postular
 from proyectoFinal.views import contacto, inicio, nosotros
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', inicio, name= 'inicio'),
+    path(r'^miperfil/(?P<userId>\d+)/$', mi_perfil, name= 'miperfil'),
+    path(r'^mis_posteos/(?P<userId>\d+)/$', mis_posteos, name= 'mis_posteos'),
     path('nosotros/', nosotros, name= 'nosotros'),
+    path(r'^postular/(?P<usuario>\d+)/(?P<posteo>\d+)/$', postular, name= 'postular'),
+    path(r'^denunciar/(?P<usuario>\d+)/(?P<denunciado>\d+)/$', denunciar, name= 'denunciar'),
     path('contacto/', contacto, name= 'contacto'),
     path('mostrar_posteo/', mostrar_posteo, name= 'mostrar_posteo'),
     path('nuevoPost/', nuevoPost, name= 'nuevoPost'),
+    path('accounts/', include('django.contrib.auth.urls' ), name='login'), 
+    path('registroUsuario/', formulario_registro_usuario, name= 'registroUsuario'),
 ]

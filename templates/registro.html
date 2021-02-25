@@ -2,44 +2,68 @@
 
 {% block title %} Registrar Post {% endblock %}
 
-{% block content %}
-    <div class="container mb-5">
-        <h1 class="text-center">Empieza con una nueva adopción</h1>
-        <div class="container">
-            <form enctype="multipart/form-data" action="postear" method="post">
-                <div class="mb-3">
-                    <label for="nombreMascota" class="form-label">Nombre de Mascota</label>
-                    <input type="text" class="form-control" id="nombreMascota" aria-describedby="nombreMascotaAyuda">
-                    <div id="nombreMascotaAyuda" class="form-text">Ingresa el nombre en caso de que posea alguno.</div>
+
+
+    {% block content %}
+    {% if user.is_authenticated %}
+
+        
+
+        {% if post_ok %}
+            <div class="container">
+                <h1 class="text-center mt-5">Se ha registrado correctamente tu nuevo Post</h1>
+            </div>
+        {% else %}
+            <div class="container mb-5">
+                <h1 class="text-center">Empieza con una nueva adopción</h1>
+                <div class="container">
+                    <form enctype="multipart/form-data" action="/nuevoPost/" method="post"> {% csrf_token %}
+                        <input type="text" hidden value='' id="userId" name="userId">
+                        <div class="mb-3">
+                            <label for="nombreMascota" class="form-label">Nombre de Mascota</label>
+                            <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" aria-describedby="nombreMascotaAyuda">
+                            <div id="nombreMascotaAyuda" class="form-text">Ingresa el nombre en caso de que posea alguno.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipoAnimal" class="form-label">Animal</label>
+                            <select name="tipoAnimal" id="tipoAnimal" class="form-control">
+                                <option value="Perro">Perro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Conejo">Conejo</option>
+                                <option value="Loro">Loro</option>
+                                <option value="Otros">Otros</option>
+                            </select>  
+                        </div>
+                        <div class="mb-3">
+                            <label for="otros" class="form-label">Otros</label>
+                            <input type="text" class="form-control" name="otros" id="otros">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edad" class="form-label">Edad</label>
+                            <input type="text" class="form-control" id="edad" name="edad">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcionPost" class="form-label">Descripción</label>
+                            <textarea class="form-control" name="descripcionPost" id="descripcionPost" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fotoMascota" class="form-label">Foto</label>
+                            <input class="form-control" name="fotoMascota" type="file" id="fotoMascota"/>
+                        </div>                
+                        <button type="submit" class="btn btn-success mb-5">Publicar</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="tipoAnimal" class="form-label">Animal</label>
-                    <select name="tipoAnimal" id="tipoAnimal" class="form-control">
-                        <option value="Perro">Perro</option>
-                        <option value="Gato">Gato</option>
-                        <option value="Conejo">Conejo</option>
-                        <option value="Loro">Loro</option>
-                        <option value="Otros">Otros</option>
-                    </select>  
-                </div>
-                <div class="mb-3">
-                    <label for="otros" class="form-label">Otros</label>
-                    <input type="text" class="form-control" id="otros">
-                </div>
-                <div class="mb-3">
-                    <label for="edad" class="form-label">Edad</label>
-                    <input type="text" class="form-control" id="edad">
-                </div>
-                <div class="mb-3">
-                    <label for="descripcionPost" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="descripcionPost" rows="3"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="fotoMascota" class="form-label">Foto</label>
-                    <input class="form-control" name="fotoMascota" type="file" id="fotoMascota"/>
-                </div>                
-                <button type="submit" class="btn btn-success mb-5">Publicar</button>
-            </form>
-        </div>
-    </div>
-{% endblock %}
+            </div>
+
+            <script>
+                var userId = '{{user.id}}'
+                document.getElementById('userId').value = userId
+    
+            </script>
+        {% endif %}
+        {% else %}
+        <h1 class="text-center mt-5">Debes estar registrado</h1>
+        {% endif %}
+    {% endblock %}
+
+

@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.registro'
+    'apps.registro',
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
@@ -111,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-AR'
 
 TIME_ZONE = 'UTC'
 
@@ -126,6 +130,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
+STATICFILES_URL = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+SITE_ID=1
+
+LOGIN_REDIRECT_URL= "/index"
+LOGOUT_REDIRECT_URL="/index"

@@ -1,0 +1,55 @@
+{% extends 'principal/index.html' %}
+
+{% block title %} Tu Perfil {% endblock %}
+
+{% block content %}
+
+        {% if mis_posts %}
+
+            <h1 class="text-center my-5">Mis Posteos</h1>
+            
+               <div class="container">
+                    <table class="table">
+                        <tr>
+                            <th scope="col" class="text-center text-success fs-3">Nombre Mascota</th>
+                            <th scope="col" class="text-center text-success fs-3">Fecha del Post</th>
+                            <th scope="col" class="text-center text-success fs-3">Postulantes</th>
+                        </tr>
+                        {% for post in lista_posteos %}
+                            <tr>
+                                <th class="text-center">{{post.nombre_mascota}}</th>
+                                <th class="text-center">{{post.fecha}}</th>
+                                <th class="text-center"><a href="" class="btn btn-success px-5">Ver</a></th>
+                            </tr>
+                        {% endfor %}
+                    </table>
+               </div>
+           
+
+
+        {% else %}
+    
+            <div class="container">
+                    <h1 class="text-center mt-3">{{usuario.first_name}} {{usuario.last_name}}</h1>
+                    <h3 class="text-center mt-3">{{usuario.email}}</h3>
+                    
+                    <div class="d-flex justify-content-center">
+
+                        {% if user.is_authenticated %}
+
+                            {% if user.id != usuario.id %}
+                                <a class="btn btn-danger mt-5" href="{% url 'denunciar' usuario=user.id denunciado=usuario.id %}">Denunciar</a>
+                            {% endif %}
+                            {% if user.id == usuario.id %}
+                                <a href="{% url 'mis_posteos' userId=user.id %}" class="btn btn-success mt-5">Mis posteos</a>
+                            {% endif %}
+                        {% else %}
+                            <a class="btn btn-danger mt-5" href="{% url 'login' %}">Denunciar</a>
+                        {% endif %}
+                        
+                    </div>
+            </div>
+        {% endif %}
+    
+
+{% endblock %}
