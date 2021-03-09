@@ -3,5 +3,32 @@
 {% block title %} Postulantes {% endblock %}
 
 {% block content %}
+    
+    {% if adoptado %}
+        <h1 class="text-center mt-5">{{mensaje}}</h1>
+    {% else %}
 
+    <div class="container">
+        <h1 class="text-center mt-5">Postulantes para {{post.nombre_mascota}}</h1>
+    </div>
+    <div class="container">
+        <table class="table mt-5">
+            <tr>
+                <th scope="col" class="text-center text-success fs-5">Nombre</th>
+                <th scope="col" class="text-center text-success fs-5">Apellido</th>
+                <th scope="col" class="text-center text-success fs-5">Elegir</th>
+            </tr>
+            
+            {% for postulante in lista_postulantes %}
+                <tr>
+                    <th class="text-center">{{postulante.first_name}}</th>
+                    <th class="text-center">{{postulante.last_name}}</th>
+                    <th class="text-center"><a href="{% url 'adoptado' idPost=post.id %}" class="btn btn-success">Aceptar</a></th>
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+
+    {% endif %}
+    
 {% endblock %}

@@ -11,15 +11,22 @@
                <div class="container">
                     <table class="table">
                         <tr>
-                            <th scope="col" class="text-center text-success fs-3">Nombre Mascota</th>
-                            <th scope="col" class="text-center text-success fs-3">Fecha del Post</th>
-                            <th scope="col" class="text-center text-success fs-3">Postulantes</th>
+                            <th scope="col" class="text-center text-success fs-5">Mascota</th>
+                            <th scope="col" class="text-center text-success fs-5">Fecha</th>
+                            <th scope="col" class="text-center text-success fs-5">Estado</th>
+                            <th scope="col" class="text-center text-success fs-5">Postulantes</th>
                         </tr>
                         {% for post in lista_posteos %}
                             <tr>
                                 <th class="text-center">{{post.nombre_mascota}}</th>
                                 <th class="text-center">{{post.fecha}}</th>
-                                <th class="text-center"><a href="" class="btn btn-success px-5">Ver</a></th>
+                                {% if post.disponible %}
+                                    <th class="text-center">SI</th>
+                                    <th class="text-center"><a href="{% url 'verPostulantes' idPost=post.id %}" class="btn btn-success px-5">Ver</a></th>
+                                {% else %}
+                                    <th class="text-center">NO</th>
+                                    <th class="text-center"></th>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </table>
@@ -41,7 +48,7 @@
                                 <a class="btn btn-danger mt-5" href="{% url 'denunciar' usuario=user.id denunciado=usuario.id %}">Denunciar</a>
                             {% endif %}
                             {% if user.id == usuario.id %}
-                                <a href="{% url 'mis_posteos' userId=user.id %}" class="btn btn-success mt-5">Mis posteos</a>
+                                <a href="{% url 'mis_posteos' userId=user.id %}" class="btn btn-success m-3">Mis posteos</a>
                             {% endif %}
                         {% else %}
                             <a class="btn btn-danger mt-5" href="{% url 'login' %}">Denunciar</a>

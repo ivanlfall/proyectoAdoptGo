@@ -5,66 +5,99 @@
 {% block title %} Inicio {% endblock %}
 
 {% block content %}
-  
-  {% if postulacion_ok %}
-    <h1 class="text-center mt-5">{{mensaje}}</h1>
-  {% else %}
 
-  <div class="container w-75 mt-3">
-  <form method="GET" class="d-flex">
-    <input class="form-control me-2" name="buscarMascota" type="search" placeholder="Buscar por Animal" required maxlength="10">
-    <button class="btn btn-outline-success" type="submit">Buscar</button>
-  </form>
-</div>
+    {% if postulacion_ok %}
+      <h1 class="text-center mt-5">{{mensaje}}</h1>
+    {% else %}
 
-<div class="album py-5 bg-light mb-5">
-  <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for post in posteos %}
+      <div class="container w-75 mt-3">
+        <form method="GET" class="d-flex">
+          <input class="form-control me-2" name="buscarMascota" type="search" placeholder="Buscar por Animal" required
+            maxlength="10">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
 
-    
+    <div class="album py-5 bg-light mb-5">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for post in posteos %}
+
+
           <div class="col">
             <div class="card shadow-sm">
               <div class="list-group">
-                  {% if user.id == post.usuario_creador.id %}
-                    <a class="list-group-item list-group-item-action list-group-item-info" href="{% url 'miperfil' userId=post.usuario_creador.id  %}"><h6 class="text-end">{{post.usuario_creador.first_name}} {{post.usuario_creador.last_name}}</h6></a>
-                  {% else %}
-                    <a class="list-group-item list-group-item-action list-group-item-success" href="{% url 'miperfil' userId=post.usuario_creador.id  %}"><h6 class="text-end">{{post.usuario_creador.first_name}} {{post.usuario_creador.last_name}}</h6></a>
-                  {% endif %}
-                  
-              </div>
-              <!-- <div class="bd-placeholder-img card-img-top" width="50%" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"> -->
-                <img src="https://picsvg.com/example/owl.svg" alt="Foto de mascota" width="200px"><br>
-                <title>{{post.nombre_mascota}}</title><rect width="70%" height="70%" fill="black"/><text x="0%" y="95%" fill="#eceeef" dy=".10em">{{post.nombre_mascota}}</text>
-              <!-- </div> -->
 
-              <div class="card-body">
-                <p class="card-text">{{post.descripcion}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
+                {% if post.disponible %}
                     {% if user.id == post.usuario_creador.id %}
-                    <h6>Posteado por ti</h6>
+                      <a class="list-group-item list-group-item-action list-group-item-info"
+                        href="{% url 'miperfil' userId=post.usuario_creador.id  %}">
+                        <h6 class="text-end">{{post.usuario_creador.first_name}} {{post.usuario_creador.last_name}}</h6>
+                      </a>
                     {% else %}
-                      {% if user.is_authenticated %}
-                        <a class="btn btn-sm btn-outline-success" name="postularme" href="{% url 'postular' usuario=user.id posteo=post.id %}">Postularme</a>
-                      {% else %}
-                      <a class="btn btn-sm btn-outline-success" name="postularme" href="{% url 'login' %}">Postularme</a>
-                      {% endif %}
+                      <a class="list-group-item list-group-item-action list-group-item-success"
+                        href="{% url 'miperfil' userId=post.usuario_creador.id  %}">
+                        <h6 class="text-end">{{post.usuario_creador.first_name}} {{post.usuario_creador.last_name}}</h6>
+                      </a>
                     {% endif %}
+
+                    </div>
+                    <img src="https://picsvg.com/example/owl.svg" alt="Foto de mascota" width="200px"><br>
+                    <title>{{post.nombre_mascota}}</title>
+                    <rect width="70%" height="70%" fill="black" /><text x="0%" y="95%" fill="#eceeef"
+                      dy=".10em">{{post.nombre_mascota}}</text>
+
+                    <div class="card-body">
+                      <p class="card-text">{{post.descripcion}}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                          {% if user.id == post.usuario_creador.id %}
+                          <h6>Posteado por ti</h6>
+                          {% else %}
+                          {% if user.is_authenticated %}
+                          <a class="btn btn-sm btn-outline-success" name="postularme"
+                            href="{% url 'postular' usuario=user.id posteo=post.id %}">Postularme</a>
+                          {% else %}
+                          <a class="btn btn-sm btn-outline-success" name="postularme" href="{% url 'login' %}">Postularme</a>
+                          {% endif %}
+                          {% endif %}
+                        </div>
+                        <small class="text-muted">{{post.fecha}}</small>
+                      </div>
+                    </div>
                   </div>
-                  <small class="text-muted">{{post.fecha}}</small>
                 </div>
+          {% else %}
+            <a class="list-group-item list-group-item-action list-group-item-danger"
+              href="{% url 'miperfil' userId=post.usuario_creador.id  %}">
+              <h6 class="text-end">{{post.usuario_creador.first_name}} {{post.usuario_creador.last_name}}</h6>
+            </a>
+          </div>
+          <img src="https://picsvg.com/example/owl.svg" alt="Foto de mascota" width="200px"><br>
+          <title>{{post.nombre_mascota}}</title>
+          <rect width="70%" height="70%" fill="black" /><text x="0%" y="95%" fill="#eceeef"
+            dy=".10em">{{post.nombre_mascota}}</text>
+
+          <div class="card-body">
+            <p class="card-text">{{post.descripcion}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <h6>No Disponible</h6>
+              </div>
+              <small class="text-muted">{{post.fecha}}</small>
+              </div>
               </div>
             </div>
           </div>
+          {% endif %}
 
-      
-        {% endfor %}
-    </div>
-    </div>
-</div>
 
-  {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
 
 
 

@@ -186,3 +186,47 @@ def mis_posteos(request, userId):
             'lista_posteos' : lista_posteos
         }
     )
+
+def verPostulantes(request, idPost):
+    
+    post = Posteo.objects.filter(
+            id = idPost 
+        ).first()
+
+    lista_postulantes = []
+    for postulante in post.postulantes:
+
+        lista_postulantes.append(
+            User.objects.filter(
+                id = int(postulante)
+            ).first()
+        )
+
+    return render(
+        request,
+        'verPostulantes.html',
+        {
+            'lista_postulantes' : lista_postulantes,
+            'post' : post
+        }
+    )
+
+def adopcionCompletada(request, idPost):
+
+    adoptado = True
+
+    post = Posteo.objects.filter(
+            id = idPost 
+        ).first()
+
+    post.disponible = False
+    post.save()
+    mensaje = 'El adoptante fué asignado'
+    return render(
+        request,
+        'verPostulantes.html',
+        {
+            'mensaje' : mensaje,
+            'adoptado' : adoptado
+        }
+    )
