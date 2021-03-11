@@ -17,13 +17,19 @@
                 <th scope="col" class="text-center text-success fs-5">Nombre</th>
                 <th scope="col" class="text-center text-success fs-5">Apellido</th>
                 <th scope="col" class="text-center text-success fs-5">Elegir</th>
+                <th scope="col" class="text-center text-success fs-5">Calificar</th>
             </tr>
             
             {% for postulante in lista_postulantes %}
                 <tr>
                     <th class="text-center">{{postulante.first_name}}</th>
                     <th class="text-center">{{postulante.last_name}}</th>
-                    <th class="text-center"><a href="{% url 'adoptado' idPost=post.id %}" class="btn btn-success">Aceptar</a></th>
+                    {% if post.disponible %}
+                        <th class="text-center"><a href="{% url 'adoptado' idPost=post.id %}" class="btn btn-success">Aceptar</a></th>
+                    {% else %}
+                        <th class="text-center">No Disponible</th>
+                    {% endif %}
+                    <th class="text-center"><a href="{% url 'calificar' idPostulante=postulante.id %}" class="btn btn-success">Ir</a></th>
                 </tr>
                 {% endfor %}
         </table>

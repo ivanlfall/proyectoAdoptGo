@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from apps.registro.models import CustomUserForm, Denuncia, Posteo
+from apps.registro.models import CustomUserForm, Denuncia, Posteo, ReferenciaUsuario
 from django.shortcuts import render
 from django.db.models import Q
 import datetime
@@ -78,6 +78,44 @@ def mi_perfil(request, userId):
         }
     )
 
+def puntuarUsuario(request):
+
+    comentario = ''
+
+    if request.method == 'POST':
+        usuario = User.objects.filter(
+            id = request.POST.get('idUser')
+        ).first()
+        puntuacion = request.POST.get('puntaje')
+        comentario += f'\n{request.POST.get("comentario")}'
+
+        ReferenciaUsuario.objects.create(usuario = usuario, puntaje = puntuacion, comentarios = comentario)
+        
+        comentario_ok = True
+        mensaje = 'Tu comentario se ha enviado correctamente'
+        return render(
+            request,
+            'calificarPostulante.html',
+            {
+                'comentario_ok' : comentario_ok,
+                'mensaje' : mensaje
+            }
+        )
+    
+    return render(
+        request,
+        'calificarPostulante.html',
+    )
+
+def calificar(request, idPostulante):
+
+    return render(
+        request,
+        'calificarPostulante.html',
+        {
+            'usuario' : idPostulante
+        }
+    )
 
 def formulario_registro_usuario(request):
 

@@ -23,6 +23,12 @@ class CustomUserForm(UserCreationForm):
         }
 
 
+class ReferenciaUsuario(models.Model):
+
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    puntaje = models.IntegerField()
+    comentarios = models.CharField(max_length=1000, blank=True)
+
 class Posteo(models.Model):
     usuario_creador = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     nombre_mascota = models.CharField(max_length=15)

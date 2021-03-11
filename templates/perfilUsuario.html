@@ -25,7 +25,7 @@
                                     <th class="text-center"><a href="{% url 'verPostulantes' idPost=post.id %}" class="btn btn-success px-5">Ver</a></th>
                                 {% else %}
                                     <th class="text-center">NO</th>
-                                    <th class="text-center"></th>
+                                    <th class="text-center"><a href="{% url 'verPostulantes' idPost=post.id %}" class="btn btn-success px-5">Ver</a></th>
                                 {% endif %}
                             </tr>
                         {% endfor %}
