@@ -70,11 +70,24 @@ def mi_perfil(request, userId):
             id = userId 
         ).first()
 
+    referencia = ReferenciaUsuario.objects.filter(
+        usuario = usuario
+    )
+    sumador = 0
+    for ref in referencia:
+        sumador += ref.puntaje
+
+    puntajeTotal = round(sumador/len(referencia),2)
+
+    print(referencia)
+
     return render(
         request,
         'perfilUsuario.html',
         {
-            'usuario' : usuario
+            'usuario' : usuario,
+            'referencia' : referencia,
+            'puntajeTotal' : puntajeTotal
         }
     )
 

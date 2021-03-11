@@ -39,6 +39,12 @@
             <div class="container">
                     <h1 class="text-center mt-3">{{usuario.first_name}} {{usuario.last_name}}</h1>
                     <h3 class="text-center mt-3">{{usuario.email}}</h3>
+                    <h5 class="text-center my-3">Calificación: {{puntajeTotal}}</h5>
+                    <h5 class="mb-5">Comentarios</h5>
+                            {% for ref in referencia %}
+                                <h6>{{ref.comentarios}}</h6>
+                                <hr>
+                            {% endfor %}
                     
                     <div class="d-flex justify-content-center">
 
