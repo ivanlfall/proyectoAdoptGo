@@ -66,9 +66,10 @@ def nuevoPost(request):
 
 def mi_perfil(request, userId):
 
-    usuario = User.objects.filter(
-            id = userId 
-        ).first()
+    usuario = filtrar(User, userId)
+    #  User.objects.filter(
+    #         id = userId 
+    #     ).first()
 
     referencia = ReferenciaUsuario.objects.filter(
         usuario = usuario
@@ -76,10 +77,10 @@ def mi_perfil(request, userId):
     sumador = 0
     for ref in referencia:
         sumador += ref.puntaje
-
-    puntajeTotal = round(sumador/len(referencia),2)
-
-    print(referencia)
+    if len(referencia) == 0:
+        puntajeTotal = 0
+    else:
+        puntajeTotal = round(sumador/len(referencia),2)
 
     return render(
         request,
@@ -94,11 +95,12 @@ def mi_perfil(request, userId):
 def puntuarUsuario(request):
 
     comentario = ''
-
+    idUsuario = request.POST.get('idUser')
     if request.method == 'POST':
-        usuario = User.objects.filter(
-            id = request.POST.get('idUser')
-        ).first()
+        usuario = filtrar(User, idUsuario)
+        #  User.objects.filter(
+        #     id = request.POST.get('idUser')
+        # ).first()
         puntuacion = request.POST.get('puntaje')
         comentario += f'\n{request.POST.get("comentario")}'
 
@@ -152,12 +154,14 @@ def formulario_registro_usuario(request):
 def postular(request, usuario, posteo):
 
     postulacion_ok = True
-    user = User.objects.filter(
-            id = usuario 
-        ).first()
-    post = Posteo.objects.filter(
-        id = posteo
-    ).first()
+    user = filtrar(User, usuario) 
+    # User.objects.filter(
+    #         id = usuario 
+    #     ).first()
+    post = filtrar(Posteo, posteo)
+    #  Posteo.objects.filter(
+    #     id = posteo
+    # ).first()
     mensaje = f'Has ingresado a la lista para adoptar a {post.nombre_mascota}'
     
     post.postulantes += str(user.id)
@@ -177,12 +181,14 @@ def postular(request, usuario, posteo):
 
 def denunciar(request, usuario, denunciado):
 
-    userDenunciante = User.objects.filter(
-                id = usuario 
-            ).first()
-    userDenunciado = User.objects.filter(
-                id = denunciado 
-            ).first()
+    userDenunciante = filtrar(User, usuario)
+    # User.objects.filter(
+    #             id = usuario 
+    #         ).first()
+    userDenunciado = filtrar(User, denunciado)
+    # User.objects.filter(
+    #             id = denunciado 
+    #         ).first()
 
     if request.method == 'POST':
 
@@ -220,9 +226,7 @@ def mis_posteos(request, userId):
 
     mis_posts = True
 
-    usuario = User.objects.filter(
-            id = userId 
-        ).first()
+    usuario = filtrar(User, userId)
     
     lista_posteos = Posteo.objects.filter(
         usuario_creador = usuario
@@ -240,9 +244,7 @@ def mis_posteos(request, userId):
 
 def verPostulantes(request, idPost):
     
-    post = Posteo.objects.filter(
-            id = idPost 
-        ).first()
+    post = filtrar(Posteo, idPost)
 
     lista_postulantes = []
     for postulante in post.postulantes:
@@ -266,9 +268,7 @@ def adopcionCompletada(request, idPost):
 
     adoptado = True
 
-    post = Posteo.objects.filter(
-            id = idPost 
-        ).first()
+    post = filtrar(Posteo, idPost)
 
     post.disponible = False
     post.save()
@@ -281,3 +281,9 @@ def adopcionCompletada(request, idPost):
             'adoptado' : adoptado
         }
     )
+
+def filtrar(objeto, id):
+
+    return objeto.objects.filter(
+        id = id 
+    ).first()
